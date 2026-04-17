@@ -35,8 +35,8 @@ This project allows you to:
 ### Quickstart
 
 ```
-git clone https://github.com/Nuelonye/merkle-airdrop
-cd merkle-airdrop
+git clone https://github.com/Nuelonye/Merkle-Airdrop
+cd Merkle-Airdrop
 foundryup
 anvil
 ```
