@@ -4,35 +4,35 @@ A complete implementation of a Merkle Tree-based token airdrop using Foundry.
 
 This project allows you to:
 
-> Generate a Merkle tree from a list of recipients
-> Deploy an ERC20 token and airdrop contract
-> Sign claim messages
-> Claim tokens using Merkle proofs + signatures
-> Automate the entire flow with a single .sh script
+1. Generate a Merkle tree from a list of recipients
+2. Deploy an ERC20 token and airdrop contract
+3. Sign claim messages
+4. Claim tokens using Merkle proofs + signatures
+5. Automate the entire flow with a single .sh script
 
 
-# Project Structure
+## Project Structure
 
 ├── script/
 │   ├── GenerateInput.s.sol      # Creates input.json
 │   ├── MakeMerkle.s.sol         # Builds Merkle tree + proofs
 │   ├── DeployMerkleAirdrop.s.sol
 │   ├── Interact.s.sol           # Claim script
-│
+
 ├── src/
 │   ├── BagelToken.sol
 │   ├── MerkleAirdrop.sol
-│
+
 ├── script/target/
 │   ├── input.json
-│   ├── output.json
-│
+│   ├── output.jsons
+
 ├── run_airdrop.sh               #  FULL AUTOMATION SCRIPT
 
 
-# QUICK START (ONE COMMAND)
+## QUICK START (ONE COMMAND)
 
-## Quickstart
+### Quickstart
 
 ```
 git clone https://github.com/Nuelonye/merkle-airdrop
@@ -42,9 +42,9 @@ anvil
 ```
 
 
-# Deployment and Interaction on Anvil
+## Deployment and Interaction on Anvil
 
-## What this Script Does (Step-by-Step)
+### What this Script Does (Step-by-Step)
 ```
 chmod +x run_airdrop_anvil.sh
 ./run_airdrop_anvil.sh
@@ -55,27 +55,27 @@ chmod +x run_airdrop_anvil.sh
 1. Generate Input Data
 ```forge script script/GenerateInput.s.sol:GenerateInput```
 
-Creates: script/target/input.json
+    Creates: script/target/input.json
 
-Contains: recipient addresses, token amounts
+    Contains: recipient addresses, token amounts
 
 2. Build Merkle Tree
 ```forge script script/MakeMerkle.s.sol:MakeMerkle```
 
-Creates:script/target/output.json
+    Creates:script/target/output.json
 
-Contains: leaf nodes, proofs, root
+    Contains: leaf nodes, proofs, root
 
 3. Deploy Contracts
 ```forge script script/DeployMerkleAirdrop.s.sol:DeployMerkleAirdrop --rpc-url http://localhost:8545 --private-key <DEPLOYER_PK> --broadcast```
 
-Deploys: ERC20 token, MerkleAirdrop contract
+    Deploys: ERC20 token, MerkleAirdrop contract
 
 4. Generate Message Hash
 ```cast call <AIRDROP_ADDRESS> "getMessageHash(address,uint256)" <USER_ADDRESS> <AMOUNT>```
 
 5. Sign Message
-cast wallet sign --no-hash <DIGEST> --private-key <USER_PK>
+```cast wallet sign --no-hash <DIGEST> --private-key <USER_PK>```
 
 6. Paste Signature (Manual Step)
 
@@ -96,12 +96,9 @@ cast --to-dec <HEX_BALANCE>
 ✅ User successfully claimed 25 tokens
 
 
-# Run to 
+## Important Notes
 
-
-# Important Notes
-
-## Signature Format
+### Signature Format
 
 ✅ Correct:
         hex"76e78a..."
@@ -114,7 +111,7 @@ cast --to-dec <HEX_BALANCE>
 
 ## Project design and assumptions
 
-> Efficient airdrops using Merkle trees
-> Secure claims using signatures
-> Full automation via Foundry scripts
-> Real-world production pattern
+1. Efficient airdrops using Merkle trees
+2. Secure claims using signatures
+3. Full automation via Foundry scripts
+4. Real-world production pattern
